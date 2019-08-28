@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>函数式编程</title>
+      <link href="undefined2019/08/28/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
+      <url>2019/08/28/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/</url>
+      
+        <content type="html"><![CDATA[<h1 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h1><h2 id="一等公民的函数"><a href="#一等公民的函数" class="headerlink" title="一等公民的函数"></a>一等公民的函数</h2><p>减少包裹，删减无用代码</p><pre><code class="js">// 这行ajaxCall(json =&gt; callback(json));// 等价于这行ajaxCall(callback);</code></pre><h2 id="纯函数的好处"><a href="#纯函数的好处" class="headerlink" title="纯函数的好处"></a>纯函数的好处</h2><p>从定义上来说，纯函数必须要能够根据相同的输入返回相同的输出；如果函数需要跟外部事物打交道，那么就无法保证这一点了。</p><h3 id="可缓存性"><a href="#可缓存性" class="headerlink" title="可缓存性"></a>可缓存性</h3><pre><code class="js">var squareNumber  = memoize(function(x){ return x*x; });squareNumber(4);//=&gt; 16squareNumber(4); // 从缓存中读取输入值为 4 的结果//=&gt; 16squareNumber(5);//=&gt; 25squareNumber(5); // 从缓存中读取输入值为 5 的结果//=&gt; 25</code></pre><h3 id="可移植性"><a href="#可移植性" class="headerlink" title="可移植性"></a>可移植性</h3><pre><code class="js">var signUp = function(attrs) {  var user = saveUser(attrs);  welcomeUser(user);};var saveUser = function(attrs) {    var user = Db.save(attrs);    ...};var welcomeUser = function(user) {    Email(user, ...);    ...};// 纯的var signUp = function(Db, Email, attrs) {  return function() {    var user = saveUser(Db, attrs);    welcomeUser(Email, user);  };};var saveUser = function(Db, attrs) {    ...};var welcomeUser = function(Email, user) {    ...};</code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 代码规范 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="undefined2019/08/24/hello-world/"/>
       <url>2019/08/24/hello-world/</url>

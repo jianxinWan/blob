@@ -14,7 +14,7 @@
     <meta name="description" content>
     <meta name="author" content="origin_wan">
     <meta name="keywords" content>
-    <title>Tags ~ origin</title>
+    <title>函数式编程 ~ origin</title>
     <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css?v=5.7.2">
     <link rel="stylesheet" href="/lib/mdbootstrap/css/bootstrap.min.css?v=4.3.1">
     <link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css?v=4.8.7">
@@ -31,7 +31,7 @@
 
 
 <body>
-<header style="height: 80vh;">
+<header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
 <div class="container">
     <a class="navbar-brand" href="/">&nbsp;<strong>origin</strong>&nbsp;</a>
@@ -77,13 +77,16 @@
 
 </nav>
     <div class="view intro-2"
-         style="background: url('/img/archive.jpg')no-repeat center center;background-size: cover;">
+         style="background: url('/img/post.jpg')no-repeat center center;background-size: cover;">
         <div class="full-bg-img">
             <div class="mask rgba-black-light flex-center">
                 <div class="container text-center white-text wow fadeInUp">
                     <span class="h2" id="subtitle">
                         
                     </span>
+                    
+                        <br>
+                        <p>Wednesday, August 28th 2019, 5:16 pm</p>
                     
                 </div>
             </div>
@@ -93,22 +96,108 @@
 
 <main>
     
-        <div class="container nopadding-md">
-            <div class="py-5 z-depth-3 board">
-                
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-md-10 m-auto">
-                            
+        
 
-<div class="text-center tagcloud">
-    <a href="/tags/代码规范/" style="font-size: 15px; color: #bbe">代码规范</a>
-</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-lg-block col-lg-2"></div>
+            <div class="col-lg-8 nopadding-md">
+                <div class="py-5 z-depth-3 board">
+                    <div class="post-content mx-auto">
+                        <div class="markdown-body">
+                            <h1 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h1><h2 id="一等公民的函数"><a href="#一等公民的函数" class="headerlink" title="一等公民的函数"></a>一等公民的函数</h2><p>减少包裹，删减无用代码</p>
+<pre><code class="js">
+// 这行
+ajaxCall(json =&gt; callback(json));
+
+// 等价于这行
+ajaxCall(callback);
+</code></pre>
+<h2 id="纯函数的好处"><a href="#纯函数的好处" class="headerlink" title="纯函数的好处"></a>纯函数的好处</h2><p>从定义上来说，纯函数必须要能够根据相同的输入返回相同的输出；如果函数需要跟外部事物打交道，那么就无法保证这一点了。</p>
+<h3 id="可缓存性"><a href="#可缓存性" class="headerlink" title="可缓存性"></a>可缓存性</h3><pre><code class="js">var squareNumber  = memoize(function(x){ return x*x; });
+
+squareNumber(4);
+//=&gt; 16
+
+squareNumber(4); // 从缓存中读取输入值为 4 的结果
+//=&gt; 16
+
+squareNumber(5);
+//=&gt; 25
+
+squareNumber(5); // 从缓存中读取输入值为 5 的结果
+//=&gt; 25</code></pre>
+<h3 id="可移植性"><a href="#可移植性" class="headerlink" title="可移植性"></a>可移植性</h3><pre><code class="js">
+var signUp = function(attrs) {
+  var user = saveUser(attrs);
+  welcomeUser(user);
+};
+
+var saveUser = function(attrs) {
+    var user = Db.save(attrs);
+    ...
+};
+
+var welcomeUser = function(user) {
+    Email(user, ...);
+    ...
+};
+
+// 纯的
+var signUp = function(Db, Email, attrs) {
+  return function() {
+    var user = saveUser(Db, attrs);
+    welcomeUser(Email, user);
+  };
+};
+
+var saveUser = function(Db, attrs) {
+    ...
+};
+
+var welcomeUser = function(Email, user) {
+    ...
+};</code></pre>
+
+                            <hr>
+                        </div>
+                        <br>
+                        <div>
+                            
+                            <p>
+                                <i class="iconfont icon-tag"></i>
+                                
+                                    <a class="hover-with-bg" href="/tags/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83">代码规范</a>
+                                
+                            </p>
+                            
+                                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+                            
                         </div>
                     </div>
                 </div>
             </div>
+        <div class="d-none d-lg-block col-lg-2 toc-container">
+            
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i> Toc:</p> 
+    <div id="tocbot"></div>
+  </div>
+
         </div>
+    </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container comments mx-auto" id="comments">
+        
+    </div>
+</div>
+
     
 </main>
 
@@ -153,6 +242,11 @@
   <script src="/lib/nprogress/nprogress.min.js?v=0.2.0"></script>
   <script src="/js/main.js"></script>
   
+    
+      <script src="/lib/tocbot/tocbot.min.js?v=4.7.0"></script>
+    
+    <script src="/js/post.js"></script>
+  
   
     <script src="/lib/prettify/prettify.min.js?v=0.1.0"></script>
     <script>
@@ -168,7 +262,7 @@
         var typed = new Typed('#subtitle', {
           strings: [
             '  ',
-            "Tags&nbsp;",
+            "函数式编程&nbsp;",
         ],
         cursorChar: "_",
         typeSpeed: 70,
