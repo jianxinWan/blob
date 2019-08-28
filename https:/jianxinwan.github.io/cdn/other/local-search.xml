@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>函数式编程</title>
+      <link href="undefined2019/08/28/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
+      <url>2019/08/28/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/</url>
+      
+        <content type="html"><![CDATA[<h1 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h1><h2 id="一等公民的函数"><a href="#一等公民的函数" class="headerlink" title="一等公民的函数"></a>一等公民的函数</h2><p>减少包裹，删减无用代码</p><pre><code class="js">// 这行ajaxCall(json =&gt; callback(json));// 等价于这行ajaxCall(callback);</code></pre><h2 id="纯函数的好处"><a href="#纯函数的好处" class="headerlink" title="纯函数的好处"></a>纯函数的好处</h2><p>从定义上来说，纯函数必须要能够根据相同的输入返回相同的输出；如果函数需要跟外部事物打交道，那么就无法保证这一点了。</p><h3 id="可缓存性"><a href="#可缓存性" class="headerlink" title="可缓存性"></a>可缓存性</h3><pre><code class="js">var squareNumber  = memoize(function(x){ return x*x; });squareNumber(4);//=&gt; 16squareNumber(4); // 从缓存中读取输入值为 4 的结果//=&gt; 16squareNumber(5);//=&gt; 25squareNumber(5); // 从缓存中读取输入值为 5 的结果//=&gt; 25</code></pre><h3 id="可移植性"><a href="#可移植性" class="headerlink" title="可移植性"></a>可移植性</h3><pre><code class="js">var signUp = function(attrs) {  var user = saveUser(attrs);  welcomeUser(user);};var saveUser = function(attrs) {    var user = Db.save(attrs);    ...};var welcomeUser = function(user) {    Email(user, ...);    ...};// 纯的var signUp = function(Db, Email, attrs) {  return function() {    var user = saveUser(Db, attrs);    welcomeUser(Email, user);  };};var saveUser = function(Db, attrs) {    ...};var welcomeUser = function(Email, user) {    ...};</code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 代码规范 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="undefined2019/08/24/hello-world/"/>
+      <url>2019/08/24/hello-world/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
+</search>
