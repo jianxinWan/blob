@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>React--错误边界组件</title>
+      <link href="undefined2019/09/04/React-%E9%94%99%E8%AF%AF%E8%BE%B9%E7%95%8C%E7%BB%84%E4%BB%B6/"/>
+      <url>2019/09/04/React-%E9%94%99%E8%AF%AF%E8%BE%B9%E7%95%8C%E7%BB%84%E4%BB%B6/</url>
+      
+        <content type="html"><![CDATA[<h1 id="错误边界"><a href="#错误边界" class="headerlink" title="错误边界"></a>错误边界</h1><p>错误边界是一种React组件，这种组件可以捕获并打印起自组件树任何位置的javascript错误，并且会渲染备用ui组件<code>只有 class 组件才可以成为成错误边界组件</code>,通常也只需要声明一次错误组件，并在整个项目中去使用</p><p><strong>例如：</strong> 将其包装在最顶层的路由组件并为用户展示一个 “Something went wrong” 的错误信息，就像服务端框架经常处理崩溃一样</p><blockquote><p><strong>注意</strong>:错误边界无法捕获以下场景中产生的错误：</p><ul><li>事件处理（render 方法和生命周期方法不同，事件处理器不会在渲染期间触发，一般都是自己在事件函数中通过try catch 进行错误捕获）</li><li>异步代码（例如 setTimeout 或 requestAnimationFrame 回调函数）</li><li>服务端渲染</li><li>它自身抛出来的错误（并非它的子组件）</li></ul></blockquote><h2 id="错误边界组件"><a href="#错误边界组件" class="headerlink" title="错误边界组件"></a>错误边界组件</h2><ul><li><code>static getDerivedStateFromError()</code> // 函数内部return出新的state值</li><li><code>componentDidCatch</code> // 将错误日志上报浏览器</li></ul><h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><pre><code class="js">import React from &#39;react&#39;import ReactDOM from &#39;react-dom&#39;class ErrorBoundary extends React.Component {  constructor(props) {    super(props)    this.state = { error: null, errorInfo: null }  }  static getDerivedStateFromError(error) {    return { error }  }  componentDidCatch(error, errorInfo) {    this.setState({      error,      errorInfo,      use: false,    })  }  render() {    const { errorInfo, error } = this.state    const { children } = this.props    if (errorInfo) {      // Error path      return (        &lt;div&gt;          &lt;h2&gt;Something went wrong.&lt;/h2&gt;          &lt;details style={{ whiteSpace: 'pre-wrap' }}&gt;            {error &amp;&amp; error.toString()}            &lt;br /&gt;            {errorInfo.componentStack}          &lt;/details&gt;        &lt;/div&gt;      )    }    return children  }}class BuggyCounter extends React.Component {  constructor(props) {    super(props)    this.state = { counter: 0 }  }  handleClick = () =&gt; {    this.setState(({ counter }) =&gt; ({      counter: counter + 1,    }))  }  render() {    const { counter } = this.state    if (counter === 5) {      throw new Error(&#39;I crashed!&#39;)    }    return &lt;h1 onClick={this.handleClick}&gt;{counter}&lt;/h1&gt;  }}function App() {  return (    &lt;div&gt;      &lt;ErrorBoundary&gt;        &lt;BuggyCounter /&gt;      &lt;/ErrorBoundary&gt;    &lt;/div&gt;  )}ReactDOM.render(  &lt;App /&gt;,  document.getElementById(&#39;root&#39;),)</code></pre>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Context</title>
       <link href="undefined2019/09/03/context/"/>
       <url>2019/09/03/context/</url>

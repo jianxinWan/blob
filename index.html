@@ -106,6 +106,46 @@
         
         
         <div class="col-12 col-md-8 m-auto">
+            <a href="/blog/2019/09/04/React-错误边界组件/">
+                <p class="h4 index-header">React--错误边界组件</p>
+                <div class="index-excerpt">
+                    
+                        <div class="index-text mb-1">错误边界错误边界是一种React组件，这种组件可以捕获并打印起自组件树任何位置的javascript错误，并且会渲染备用ui组件只有 class 组件才可以成为成错误边界组件,通常也只需要声明一次错误组件，并在整个项目中去使用
+例如： 将其包装在最顶层的路由组件并为用户展示一个 “Something went wrong” 的错误信息，就像服务端框架经常处理崩溃一样
+
+注意:错误边界无法捕获以下场景中产生的错误：
+
+事件处理（render 方法和生命周期方法不同，事件处理器不会在渲染期间触发，一般都是自己在事件函数中通过try catch 进行错误捕获）
+异步代码（例如 setTimeout 或 requestAnimationFrame 回调函数）
+服务端渲染
+它自身抛出来的错误（并非它的子组件）
+
+
+错误边界组件
+static getDerivedStateFromError() // 函数内部return出新的state值
+componentDidCatch // 将错误日志上报浏览器
+
+例子import React from &#39;react&#39;
+import Rea</div>
+                    
+                </div>
+            </a>
+
+            
+                <div>
+                    <i class="iconfont icon-riqi2"></i>&nbsp;2019-09-04
+                    &nbsp;&nbsp;
+                    
+                    
+                </div>
+            
+        </div>
+    </div>
+
+    <div class="row mb-4 mx-auto">
+        
+        
+        <div class="col-12 col-md-8 m-auto">
             <a href="/blog/2019/09/03/context/">
                 <p class="h4 index-header">Context</p>
                 <div class="index-excerpt">

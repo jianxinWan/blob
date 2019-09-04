@@ -14,7 +14,7 @@
     <meta name="description" content>
     <meta name="author" content="origin_wan">
     <meta name="keywords" content>
-    <title>Archives ~ origin&#39;s blog</title>
+    <title>React--错误边界组件 ~ origin&#39;s blog</title>
     <link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css?v=5.7.2">
     <link rel="stylesheet" href="/blog/lib/mdbootstrap/css/bootstrap.min.css?v=4.3.1">
     <link rel="stylesheet" href="/blog/lib/mdbootstrap/css/mdb.min.css?v=4.8.7">
@@ -31,7 +31,7 @@
 
 
 <body>
-<header style="height: 80vh;">
+<header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
 <div class="container">
     <a class="navbar-brand" href="/blog/">&nbsp;<strong>origin&#39;s blog</strong>&nbsp;</a>
@@ -77,13 +77,16 @@
 
 </nav>
     <div class="view intro-2"
-         style="background: url('https://jianxinwan.github.io/cdn/img/archive.jpg')no-repeat center center;background-size: cover;">
+         style="background: url('https://jianxinwan.github.io/cdn/img/post.jpg')no-repeat center center;background-size: cover;">
         <div class="full-bg-img">
             <div class="mask rgba-black-light flex-center">
                 <div class="container text-center white-text wow fadeInUp">
                     <span class="h2" id="subtitle">
                         
                     </span>
+                    
+                        <br>
+                        <p>Wednesday, September 4th 2019, 4:54 pm</p>
                     
                 </div>
             </div>
@@ -93,58 +96,145 @@
 
 <main>
     
-        <div class="container nopadding-md">
-            <div class="py-5 z-depth-3 board">
-                
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-md-10 m-auto">
+        
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-lg-block col-lg-2"></div>
+            <div class="col-lg-8 nopadding-md">
+                <div class="py-5 z-depth-3 board">
+                    <div class="post-content mx-auto">
+                        <div class="markdown-body">
+                            <h1 id="错误边界"><a href="#错误边界" class="headerlink" title="错误边界"></a>错误边界</h1><p>错误边界是一种React组件，这种组件可以捕获并打印起自组件树任何位置的javascript错误，并且会渲染备用ui组件<code>只有 class 组件才可以成为成错误边界组件</code>,通常也只需要声明一次错误组件，并在整个项目中去使用</p>
+<p><strong>例如：</strong> 将其包装在最顶层的路由组件并为用户展示一个 “Something went wrong” 的错误信息，就像服务端框架经常处理崩溃一样</p>
+<blockquote>
+<p><strong>注意</strong>:错误边界无法捕获以下场景中产生的错误：</p>
+<ul>
+<li>事件处理（render 方法和生命周期方法不同，事件处理器不会在渲染期间触发，一般都是自己在事件函数中通过try catch 进行错误捕获）</li>
+<li>异步代码（例如 setTimeout 或 requestAnimationFrame 回调函数）</li>
+<li>服务端渲染</li>
+<li>它自身抛出来的错误（并非它的子组件）</li>
+</ul>
+</blockquote>
+<h2 id="错误边界组件"><a href="#错误边界组件" class="headerlink" title="错误边界组件"></a>错误边界组件</h2><ul>
+<li><code>static getDerivedStateFromError()</code> // 函数内部return出新的state值</li>
+<li><code>componentDidCatch</code> // 将错误日志上报浏览器</li>
+</ul>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><pre><code class="js">import React from &#39;react&#39;
+import ReactDOM from &#39;react-dom&#39;
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { error: null, errorInfo: null }
+  }
+
+  static getDerivedStateFromError(error) {
+    return { error }
+  }
+
+  componentDidCatch(error, errorInfo) {
+    this.setState({
+      error,
+      errorInfo,
+      use: false,
+    })
+  }
+
+  render() {
+    const { errorInfo, error } = this.state
+    const { children } = this.props
+    if (errorInfo) {
+      // Error path
+      return (
+        &lt;div&gt;
+          &lt;h2&gt;Something went wrong.&lt;/h2&gt;
+          &lt;details style={{ whiteSpace: 'pre-wrap' }}&gt;
+            {error &amp;&amp; error.toString()}
+            &lt;br /&gt;
+            {errorInfo.componentStack}
+          &lt;/details&gt;
+        &lt;/div&gt;
+      )
+    }
+    return children
+  }
+}
+
+class BuggyCounter extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { counter: 0 }
+  }
+
+  handleClick = () =&gt; {
+    this.setState(({ counter }) =&gt; ({
+      counter: counter + 1,
+    }))
+  }
+
+  render() {
+    const { counter } = this.state
+    if (counter === 5) {
+      throw new Error(&#39;I crashed!&#39;)
+    }
+    return &lt;h1 onClick={this.handleClick}&gt;{counter}&lt;/h1&gt;
+  }
+}
+
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;ErrorBoundary&gt;
+        &lt;BuggyCounter /&gt;
+      &lt;/ErrorBoundary&gt;
+    &lt;/div&gt;
+  )
+}
+
+ReactDOM.render(
+  &lt;App /&gt;,
+  document.getElementById(&#39;root&#39;),
+)
+</code></pre>
+
+                            <hr>
+                        </div>
+                        <br>
+                        <div>
                             
-
-<div class="list-group">
-    <p class="h4">Total: 5</p>
-    <hr>
-    
-        
-            
-            <p class="h5">2019</p>
-        
-        <a href="/blog/2019/09/04/React-错误边界组件/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">React--错误边界组件</span>
-            <span style="float: right;">09-04</span>
-        </a>
-    
-        
-        <a href="/blog/2019/09/03/context/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">Context</span>
-            <span style="float: right;">09-03</span>
-        </a>
-    
-        
-        <a href="/blog/2019/09/01/冰总头条面经/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">冰总头条面经</span>
-            <span style="float: right;">09-01</span>
-        </a>
-    
-        
-        <a href="/blog/2019/08/28/函数式编程/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">函数式编程</span>
-            <span style="float: right;">08-28</span>
-        </a>
-    
-        
-        <a href="/blog/2019/08/24/hello-world/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">Hello World</span>
-            <span style="float: right;">08-24</span>
-        </a>
-    
-</div>
-
+                            <p>
+                                <i class="iconfont icon-tag"></i>
+                                
+                            </p>
+                            
+                                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+                            
                         </div>
                     </div>
                 </div>
             </div>
+        <div class="d-none d-lg-block col-lg-2 toc-container">
+            
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i> Toc:</p> 
+    <div id="tocbot"></div>
+  </div>
+
         </div>
+    </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container comments mx-auto" id="comments">
+        
+    </div>
+</div>
+
     
 </main>
 
@@ -189,6 +279,11 @@
   <script src="/blog/lib/nprogress/nprogress.min.js?v=0.2.0"></script>
   <script src="/blog/js/main.js"></script>
   
+    
+      <script src="/blog/lib/tocbot/tocbot.min.js?v=4.7.0"></script>
+    
+    <script src="/blog/js/post.js"></script>
+  
   
     <script src="/blog/lib/prettify/prettify.min.js?v=0.1.0"></script>
     <script>
@@ -204,7 +299,7 @@
         var typed = new Typed('#subtitle', {
           strings: [
             '  ',
-            "Archives&nbsp;",
+            "React--错误边界组件&nbsp;",
         ],
         cursorChar: "_",
         typeSpeed: 70,
