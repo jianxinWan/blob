@@ -14,7 +14,7 @@
     <meta name="description" content>
     <meta name="author" content="origin_wan">
     <meta name="keywords" content>
-    <title>Archives ~ origin&#39;s blog</title>
+    <title>react-api ~ origin&#39;s blog</title>
     <link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css?v=5.7.2">
     <link rel="stylesheet" href="/blog/lib/mdbootstrap/css/bootstrap.min.css?v=4.3.1">
     <link rel="stylesheet" href="/blog/lib/mdbootstrap/css/mdb.min.css?v=4.8.7">
@@ -31,7 +31,7 @@
 
 
 <body>
-<header style="height: 80vh;">
+<header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
 <div class="container">
     <a class="navbar-brand" href="/blog/">&nbsp;<strong>origin&#39;s blog</strong>&nbsp;</a>
@@ -77,13 +77,16 @@
 
 </nav>
     <div class="view intro-2"
-         style="background: url('https://jianxinwan.github.io/cdn/img/archive.jpg')no-repeat center center;background-size: cover;">
+         style="background: url('https://jianxinwan.github.io/cdn/img/post.jpg')no-repeat center center;background-size: cover;">
         <div class="full-bg-img">
             <div class="mask rgba-black-light flex-center">
                 <div class="container text-center white-text wow fadeInUp">
                     <span class="h2" id="subtitle">
                         
                     </span>
+                    
+                        <br>
+                        <p>Tuesday, September 3rd 2019, 7:36 pm</p>
                     
                 </div>
             </div>
@@ -93,40 +96,173 @@
 
 <main>
     
-        <div class="container nopadding-md">
-            <div class="py-5 z-depth-3 board">
-                
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-md-10 m-auto">
+        
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-lg-block col-lg-2"></div>
+            <div class="col-lg-8 nopadding-md">
+                <div class="py-5 z-depth-3 board">
+                    <div class="post-content mx-auto">
+                        <div class="markdown-body">
+                            <h1 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h1><p>Context 设计目的是为了共享那些对于一个组件树而言是“全局”的数据,很多不同层级的组件需要访问同样一些的数据，使用时需要考虑清楚，不然会使组件的复用性变差</p>
+<pre><code class="js">// React.createContext
+const MyContext = React.createContext(defaultValue); // 只有当组件所处的树中没有匹配到 Provider 时，其 defaultValue 参数才会生效
+&lt;MyContext.Provider value={/* 某个值 */} /&gt;
+// Provider新旧值检测来确定变化，使用了与 Object.is 相同的算法
+// Context.contextType
+class MyClass extends React.Component {
+  componentDidMount() {
+    let value = this.context;
+    /* 在组件挂载完成后，使用 MyContext 组件的值来执行一些有副作用的操作 */
+  }
+  componentDidUpdate() {
+    let value = this.context;
+    /* ... */
+  }
+  componentWillUnmount() {
+    let value = this.context;
+    /* ... */
+  }
+  render() {
+    let value = this.context;
+    /* 基于 MyContext 组件的值进行渲染 */
+  }
+}
+MyClass.contextType = MyContext;
+// 两种处理方法
+class MyClass extends React.Component {
+  static contextType = MyContext
+  componentDidMount() {
+    let value = this.context;
+    /* 在组件挂载完成后，使用 MyContext 组件的值来执行一些有副作用的操作 */
+  }
+  componentDidUpdate() {
+    let value = this.context;
+    /* ... */
+  }
+  componentWillUnmount() {
+    let value = this.context;
+    /* ... */
+  }
+  render() {
+    let value = this.context;
+    /* 基于 MyContext 组件的值进行渲染 */
+  }
+}
+
+// 挂载在 class 上的 contextType 属性会被重赋值为一个由 React.createContext() 创建的 Context 对象。这能让你使用 this.context 来消费最近 Context 上的那个值
+
+// Context.Consumer
+
+&lt;MyContext.Consumer&gt;
+  {value =&gt; /* 基于 context 值进行渲染*/}
+&lt;/MyContext.Consumer&gt;
+
+// 这需要函数作为子元素（function as a child）这种做法。这个函数接收当前的 context 值，返回一个 React 节点。
+</code></pre>
+<h2 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h2><pre><code class="js">import React from &#39;react&#39;
+import ReactDOM from &#39;react-dom&#39;
+
+const ThemeContext = React.createContext(&#39;light&#39;)
+
+class Nav extends React.Component {
+  state = {}
+
+  // context 可以在每个生命周期的钩子里拿到
+
+  static contextType = ThemeContext // 两种方法，可以在类上直接添加该属性，也可以使用static
+
+  componentDidMount() {
+    console.log(this.context)
+  }
+
+  render() {
+    return (
+      &lt;div&gt;nav:我是nav&lt;/div&gt;
+    )
+  }
+}
+
+function Container() {
+  return (
+    &lt;div&gt;
+      &lt;Nav /&gt;
+      &lt;br /&gt;
+      &lt;Content /&gt;
+    &lt;/div&gt;
+  )
+}
+
+function Content() {
+  return (
+    &lt;ThemeContext.Consumer&gt;
+      {value =&gt; (
+        &lt;div&gt;{value}&lt;/div&gt;
+      )}
+    &lt;/ThemeContext.Consumer&gt;
+  )
+}
+
+const App = () =&gt; {
+  return (
+    &lt;ThemeContext.Provider value=&quot;dark&quot;&gt;
+      &lt;Container /&gt;
+    &lt;/ThemeContext.Provider&gt;
+  )
+}
+
+export default () =&gt; {
+  ReactDOM.render(&lt;App /&gt;, document.getElementById(&#39;root&#39;))
+}
+</code></pre>
+<h2 id="16-8-useContext"><a href="#16-8-useContext" class="headerlink" title="16.8 useContext"></a>16.8 useContext</h2><pre><code class="js">const value = useContext(MyContext);</code></pre>
+<p><code>useContext</code> 的参数必须是 <code>context</code> 对象本身：</p>
+<ul>
+<li>正确： <code>useContext(MyContext)</code></li>
+<li>错误： <code>useContext(MyContext.Consumer)</code></li>
+<li>错误： <code>useContext(MyContext.Provider)</code></li>
+</ul>
+<p><em><code>useContext(MyContext)</code> 相当于 <code>class 组件中的 static contextType = MyContext</code> 或者 <code>&lt;MyContext.Consumer&gt;</code></em></p>
+<p><strong>注意</strong>： 调用了 useContext 的组件总会在 context 值变化时重新渲染。如果重渲染组件的开销较大，考虑使用React.memo进行优化</p>
+
+                            <hr>
+                        </div>
+                        <br>
+                        <div>
                             
-
-<div class="list-group">
-    <p class="h4">Total: 4</p>
-    <hr>
-    
-        
-            
-            <p class="h5">2019</p>
-        
-        <a href="/blog/2019/09/03/react-api/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">react-api</span>
-            <span style="float: right;">09-03</span>
-        </a>
-    
-        
-        <a href="/blog/2019/09/01/冰总头条面经/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">冰总头条面经</span>
-            <span style="float: right;">09-01</span>
-        </a>
-    
-</div>
-
+                            <p>
+                                <i class="iconfont icon-tag"></i>
+                                
+                            </p>
+                            
+                                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+                            
                         </div>
                     </div>
                 </div>
             </div>
+        <div class="d-none d-lg-block col-lg-2 toc-container">
+            
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i> Toc:</p> 
+    <div id="tocbot"></div>
+  </div>
+
         </div>
+    </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container comments mx-auto" id="comments">
+        
+    </div>
+</div>
+
     
 </main>
 
@@ -171,6 +307,11 @@
   <script src="/blog/lib/nprogress/nprogress.min.js?v=0.2.0"></script>
   <script src="/blog/js/main.js"></script>
   
+    
+      <script src="/blog/lib/tocbot/tocbot.min.js?v=4.7.0"></script>
+    
+    <script src="/blog/js/post.js"></script>
+  
   
     <script src="/blog/lib/prettify/prettify.min.js?v=0.1.0"></script>
     <script>
@@ -186,7 +327,7 @@
         var typed = new Typed('#subtitle', {
           strings: [
             '  ',
-            "Archives&nbsp;",
+            "react-api&nbsp;",
         ],
         cursorChar: "_",
         typeSpeed: 70,

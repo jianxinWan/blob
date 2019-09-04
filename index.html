@@ -106,11 +106,46 @@
         
         
         <div class="col-12 col-md-8 m-auto">
+            <a href="/blog/2019/09/03/react-api/">
+                <p class="h4 index-header">react-api</p>
+                <div class="index-excerpt">
+                    
+                        <div class="index-text mb-1">ContextContext 设计目的是为了共享那些对于一个组件树而言是“全局”的数据,很多不同层级的组件需要访问同样一些的数据，使用时需要考虑清楚，不然会使组件的复用性变差
+// React.createContext
+const MyContext = React.createContext(defaultValue); // 只有当组件所处的树中没有匹配到 Provider 时，其 defaultValue 参数才会生效
+&lt;MyContext.Provider value={/* 某个值 */} /&gt;
+// Provider新旧值检测来确定变化，使用了与 Object.is 相同的算法
+// Context.contextType
+class MyClass extends React.Component {
+  componentDidMount() {
+    let value = this.context;
+    /* 在组件挂载完成后，使用 MyContext 组件的值来执行一些有副作用的操作 */
+  }
+  componentDidUpdate() {</div>
+                    
+                </div>
+            </a>
+
+            
+                <div>
+                    <i class="iconfont icon-riqi2"></i>&nbsp;2019-09-03
+                    &nbsp;&nbsp;
+                    
+                    
+                </div>
+            
+        </div>
+    </div>
+
+    <div class="row mb-4 mx-auto">
+        
+        
+        <div class="col-12 col-md-8 m-auto">
             <a href="/blog/2019/09/01/冰总头条面经/">
                 <p class="h4 index-header">冰总头条面经</p>
                 <div class="index-excerpt">
                     
-                        <div class="index-text mb-1">冰总头条面经一面css滑动窗口 ===&gt; 宽度和高度保持比例position面向过程+面向对象弱类型 + 强类型类型转换  [] == ![]原型链数据更新双向链表event emit二面项目vue + React浏览器刷新频率(时间分片)js在V8的执行过程Model 组件手撕wasm大数相加CDN透明度http2.0稀疏数组与普通数组的区别</div>
+                        <div class="index-text mb-1">冰总头条面经一面css拖动窗口 ===&gt; 宽度和高度保持比例position面向过程+面向对象弱类型 + 强类型类型转换  [] == ![]原型链数据更新双向链表event emit二面项目vue + React浏览器刷新频率(时间分片)js在V8的执行过程Model 组件手撕wasm大数相加CDN透明度http2.0稀疏数组与普通数组的区别htmlCollection 和普通数组的区别querySelector 与普通Dom选择器三面</div>
                     
                 </div>
             </a>
