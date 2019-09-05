@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>高阶组件</title>
+      <link href="undefined2019/09/04/%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6/"/>
+      <url>2019/09/04/%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6/</url>
+      
+        <content type="html"><![CDATA[<h1 id="高阶组件"><a href="#高阶组件" class="headerlink" title="高阶组件"></a>高阶组件</h1><p><strong>高阶组件是参数为组件，并且返回新组件的函数</strong></p><p><code>hocFactory:: W: React.Component =&gt; E: React.Component</code></p><p>其实现方式上基本上是一个类工厂</p><h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><blockquote><ul><li>属性代理</li><li>反向继承</li></ul></blockquote><h3 id="属性代理"><a href="#属性代理" class="headerlink" title="属性代理"></a>属性代理</h3><pre><code class="jsx">const HOC = WrapperCom =&gt; class extends React.Component {  state = {}  render() {    // 在此处过滤不必要的props     // 添加新的props属性    return &lt;WrapperCom {...this.props} /&gt;  }}function Component1() {  return (    &lt;div&gt;      Component1    &lt;/div&gt;  )}function App() {  const NewComponent = HOC(Component1)  return (    &lt;div&gt;      &lt;NewComponent /&gt;    &lt;/div&gt;  )}</code></pre><h4 id="Refs不会被传递"><a href="#Refs不会被传递" class="headerlink" title="Refs不会被传递"></a>Refs不会被传递</h4><p>虽然高阶组件的约定是将所有 props 传递给被包装组件，但这对于 refs 并不适用。那是因为 ref 实际上并不是一个 prop - 就像 key 一样，它是由 React 专门处理的。如果将 ref 添加到 HOC 的返回组件中，则 ref 引用指向容器组件，而不是被包装组件。</p><p><strong>解决方案</strong><br><code>React.forwardRef</code></p><pre><code class="js">const FancyButton = React.forwardRef((props, ref) =&gt; (  &lt;button ref={ref} className=&quot;FancyButton&quot;&gt;    {props.children}  &lt;/button&gt;));</code></pre><h4 id="抽象state"><a href="#抽象state" class="headerlink" title="抽象state"></a>抽象state</h4><p>我们通常将被包裹的组件的状态提到包裹它的组件中，通常指受控和非受控组件</p><pre><code class="js">// React Redux 的 `connect` 函数const ConnectedComment = connect(commentSelector, commentActions)(CommentList);</code></pre><p>等价于</p><pre><code class="js">// connect 是一个函数，它的返回值为另外一个函数。const enhance = connect(commentListSelector, commentListActions);// 返回值为 HOC，它会返回已经连接 Redux store 的组件const ConnectedComment = enhance(CommentList);</code></pre><h3 id="反向继承"><a href="#反向继承" class="headerlink" title="反向继承"></a>反向继承</h3><pre><code class="js">function iiHOC(WrappedComponent) {  return class Enhancer extends WrappedComponent {    render() {      return super.render()      // super 调用父组件原型上的方法    }  }}</code></pre><h3 id="操作state"><a href="#操作state" class="headerlink" title="操作state"></a>操作state</h3>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>React--错误边界组件</title>
       <link href="undefined2019/09/04/React-%E9%94%99%E8%AF%AF%E8%BE%B9%E7%95%8C%E7%BB%84%E4%BB%B6/"/>
       <url>2019/09/04/React-%E9%94%99%E8%AF%AF%E8%BE%B9%E7%95%8C%E7%BB%84%E4%BB%B6/</url>

@@ -14,7 +14,7 @@
     <meta name="description" content>
     <meta name="author" content="origin_wan">
     <meta name="keywords" content>
-    <title>Archives ~ origin&#39;s blog</title>
+    <title>高阶组件 ~ origin&#39;s blog</title>
     <link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css?v=5.7.2">
     <link rel="stylesheet" href="/blog/lib/mdbootstrap/css/bootstrap.min.css?v=4.3.1">
     <link rel="stylesheet" href="/blog/lib/mdbootstrap/css/mdb.min.css?v=4.8.7">
@@ -31,7 +31,7 @@
 
 
 <body>
-<header style="height: 80vh;">
+<header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
 <div class="container">
     <a class="navbar-brand" href="/blog/">&nbsp;<strong>origin&#39;s blog</strong>&nbsp;</a>
@@ -77,13 +77,16 @@
 
 </nav>
     <div class="view intro-2"
-         style="background: url('https://jianxinwan.github.io/cdn/img/archive.jpg')no-repeat center center;background-size: cover;">
+         style="background: url('https://jianxinwan.github.io/cdn/img/post.jpg')no-repeat center center;background-size: cover;">
         <div class="full-bg-img">
             <div class="mask rgba-black-light flex-center">
                 <div class="container text-center white-text wow fadeInUp">
                     <span class="h2" id="subtitle">
                         
                     </span>
+                    
+                        <br>
+                        <p>Wednesday, September 4th 2019, 10:57 pm</p>
                     
                 </div>
             </div>
@@ -93,64 +96,112 @@
 
 <main>
     
-        <div class="container nopadding-md">
-            <div class="py-5 z-depth-3 board">
-                
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-md-10 m-auto">
+        
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-lg-block col-lg-2"></div>
+            <div class="col-lg-8 nopadding-md">
+                <div class="py-5 z-depth-3 board">
+                    <div class="post-content mx-auto">
+                        <div class="markdown-body">
+                            <h1 id="高阶组件"><a href="#高阶组件" class="headerlink" title="高阶组件"></a>高阶组件</h1><p><strong>高阶组件是参数为组件，并且返回新组件的函数</strong></p>
+<p><code>hocFactory:: W: React.Component =&gt; E: React.Component</code></p>
+<p>其实现方式上基本上是一个类工厂</p>
+<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><blockquote>
+<ul>
+<li>属性代理</li>
+<li>反向继承</li>
+</ul>
+</blockquote>
+<h3 id="属性代理"><a href="#属性代理" class="headerlink" title="属性代理"></a>属性代理</h3><pre><code class="jsx">const HOC = WrapperCom =&gt; class extends React.Component {
+  state = {}
+
+  render() {
+    // 在此处过滤不必要的props 
+    // 添加新的props属性
+    return &lt;WrapperCom {...this.props} /&gt;
+  }
+}
+
+function Component1() {
+  return (
+    &lt;div&gt;
+      Component1
+    &lt;/div&gt;
+  )
+}
+
+function App() {
+  const NewComponent = HOC(Component1)
+  return (
+    &lt;div&gt;
+      &lt;NewComponent /&gt;
+    &lt;/div&gt;
+  )
+}
+</code></pre>
+<h4 id="Refs不会被传递"><a href="#Refs不会被传递" class="headerlink" title="Refs不会被传递"></a>Refs不会被传递</h4><p>虽然高阶组件的约定是将所有 props 传递给被包装组件，但这对于 refs 并不适用。那是因为 ref 实际上并不是一个 prop - 就像 key 一样，它是由 React 专门处理的。如果将 ref 添加到 HOC 的返回组件中，则 ref 引用指向容器组件，而不是被包装组件。</p>
+<p><strong>解决方案</strong><br><code>React.forwardRef</code></p>
+<pre><code class="js">const FancyButton = React.forwardRef((props, ref) =&gt; (
+  &lt;button ref={ref} className=&quot;FancyButton&quot;&gt;
+    {props.children}
+  &lt;/button&gt;
+));</code></pre>
+<h4 id="抽象state"><a href="#抽象state" class="headerlink" title="抽象state"></a>抽象state</h4><p>我们通常将被包裹的组件的状态提到包裹它的组件中，通常指受控和非受控组件</p>
+<pre><code class="js">// React Redux 的 `connect` 函数
+const ConnectedComment = connect(commentSelector, commentActions)(CommentList);</code></pre>
+<p>等价于</p>
+<pre><code class="js">// connect 是一个函数，它的返回值为另外一个函数。
+const enhance = connect(commentListSelector, commentListActions);
+// 返回值为 HOC，它会返回已经连接 Redux store 的组件
+const ConnectedComment = enhance(CommentList);</code></pre>
+<h3 id="反向继承"><a href="#反向继承" class="headerlink" title="反向继承"></a>反向继承</h3><pre><code class="js">function iiHOC(WrappedComponent) {
+  return class Enhancer extends WrappedComponent {
+    render() {
+      return super.render()
+      // super 调用父组件原型上的方法
+    }
+  }
+}</code></pre>
+<h3 id="操作state"><a href="#操作state" class="headerlink" title="操作state"></a>操作state</h3>
+                            <hr>
+                        </div>
+                        <br>
+                        <div>
                             
-
-<div class="list-group">
-    <p class="h4">Total: 6</p>
-    <hr>
-    
-        
-            
-            <p class="h5">2019</p>
-        
-        <a href="/blog/2019/09/04/高阶组件/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">高阶组件</span>
-            <span style="float: right;">09-04</span>
-        </a>
-    
-        
-        <a href="/blog/2019/09/04/React-错误边界组件/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">React--错误边界组件</span>
-            <span style="float: right;">09-04</span>
-        </a>
-    
-        
-        <a href="/blog/2019/09/03/context/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">Context</span>
-            <span style="float: right;">09-03</span>
-        </a>
-    
-        
-        <a href="/blog/2019/09/01/冰总头条面经/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">冰总头条面经</span>
-            <span style="float: right;">09-01</span>
-        </a>
-    
-        
-        <a href="/blog/2019/08/28/函数式编程/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">函数式编程</span>
-            <span style="float: right;">08-28</span>
-        </a>
-    
-        
-        <a href="/blog/2019/08/24/hello-world/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">Hello World</span>
-            <span style="float: right;">08-24</span>
-        </a>
-    
-</div>
-
+                            <p>
+                                <i class="iconfont icon-tag"></i>
+                                
+                            </p>
+                            
+                                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+                            
                         </div>
                     </div>
                 </div>
             </div>
+        <div class="d-none d-lg-block col-lg-2 toc-container">
+            
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i> Toc:</p> 
+    <div id="tocbot"></div>
+  </div>
+
         </div>
+    </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container comments mx-auto" id="comments">
+        
+    </div>
+</div>
+
     
 </main>
 
@@ -195,6 +246,11 @@
   <script src="/blog/lib/nprogress/nprogress.min.js?v=0.2.0"></script>
   <script src="/blog/js/main.js"></script>
   
+    
+      <script src="/blog/lib/tocbot/tocbot.min.js?v=4.7.0"></script>
+    
+    <script src="/blog/js/post.js"></script>
+  
   
     <script src="/blog/lib/prettify/prettify.min.js?v=0.1.0"></script>
     <script>
@@ -210,7 +266,7 @@
         var typed = new Typed('#subtitle', {
           strings: [
             '  ',
-            "Archives&nbsp;",
+            "高阶组件&nbsp;",
         ],
         cursorChar: "_",
         typeSpeed: 70,

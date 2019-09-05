@@ -106,6 +106,61 @@
         
         
         <div class="col-12 col-md-8 m-auto">
+            <a href="/blog/2019/09/04/高阶组件/">
+                <p class="h4 index-header">高阶组件</p>
+                <div class="index-excerpt">
+                    
+                        <div class="index-text mb-1">高阶组件高阶组件是参数为组件，并且返回新组件的函数
+hocFactory:: W: React.Component =&gt; E: React.Component
+其实现方式上基本上是一个类工厂
+实现方式
+
+属性代理
+反向继承
+
+
+属性代理const HOC = WrapperCom =&gt; class extends React.Component {
+  state = {}
+
+  render() {
+    // 在此处过滤不必要的props 
+    // 添加新的props属性
+    return &lt;WrapperCom {...this.props} /&gt;
+  }
+}
+
+function Component1() {
+  return (
+    &lt;div&gt;
+      Component1
+    &lt;/div&gt;
+  )
+}
+
+function App() {
+  const NewComponent = HOC(Component1)
+  return (
+    &lt;div&gt;
+      &lt;NewCompon</div>
+                    
+                </div>
+            </a>
+
+            
+                <div>
+                    <i class="iconfont icon-riqi2"></i>&nbsp;2019-09-04
+                    &nbsp;&nbsp;
+                    
+                    
+                </div>
+            
+        </div>
+    </div>
+
+    <div class="row mb-4 mx-auto">
+        
+        
+        <div class="col-12 col-md-8 m-auto">
             <a href="/blog/2019/09/04/React-错误边界组件/">
                 <p class="h4 index-header">React--错误边界组件</p>
                 <div class="index-excerpt">
