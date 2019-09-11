@@ -14,7 +14,7 @@
     <meta name="description" content>
     <meta name="author" content="origin_wan">
     <meta name="keywords" content>
-    <title>Archives ~ origin&#39;s blog</title>
+    <title>React 性能优化 ~ origin&#39;s blog</title>
     <link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css?v=5.7.2">
     <link rel="stylesheet" href="/blog/lib/mdbootstrap/css/bootstrap.min.css?v=4.3.1">
     <link rel="stylesheet" href="/blog/lib/mdbootstrap/css/mdb.min.css?v=4.8.7">
@@ -31,7 +31,7 @@
 
 
 <body>
-<header style="height: 80vh;">
+<header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
 <div class="container">
     <a class="navbar-brand" href="/blog/">&nbsp;<strong>origin&#39;s blog</strong>&nbsp;</a>
@@ -77,13 +77,16 @@
 
 </nav>
     <div class="view intro-2"
-         style="background: url('https://jianxinwan.github.io/cdn/img/archive.jpg')no-repeat center center;background-size: cover;">
+         style="background: url('https://jianxinwan.github.io/cdn/img/post.jpg')no-repeat center center;background-size: cover;">
         <div class="full-bg-img">
             <div class="mask rgba-black-light flex-center">
                 <div class="container text-center white-text wow fadeInUp">
                     <span class="h2" id="subtitle">
                         
                     </span>
+                    
+                        <br>
+                        <p>Thursday, September 5th 2019, 6:04 pm</p>
                     
                 </div>
             </div>
@@ -93,64 +96,53 @@
 
 <main>
     
-        <div class="container nopadding-md">
-            <div class="py-5 z-depth-3 board">
-                
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-md-10 m-auto">
+        
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-lg-block col-lg-2"></div>
+            <div class="col-lg-8 nopadding-md">
+                <div class="py-5 z-depth-3 board">
+                    <div class="post-content mx-auto">
+                        <div class="markdown-body">
                             
-
-<div class="list-group">
-    <p class="h4">Total: 8</p>
-    <hr>
-    
-        
-            
-            <p class="h5">2019</p>
-        
-        <a href="/blog/2019/09/09/面试点大纲-js基础/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">面试点大纲--js基础</span>
-            <span style="float: right;">09-09</span>
-        </a>
-    
-        
-        <a href="/blog/2019/09/05/React-性能优化/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">React 性能优化</span>
-            <span style="float: right;">09-05</span>
-        </a>
-    
-        
-        <a href="/blog/2019/09/04/高阶组件/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">高阶组件</span>
-            <span style="float: right;">09-04</span>
-        </a>
-    
-        
-        <a href="/blog/2019/09/04/React-错误边界组件/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">React--错误边界组件</span>
-            <span style="float: right;">09-04</span>
-        </a>
-    
-        
-        <a href="/blog/2019/09/03/context/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">Context</span>
-            <span style="float: right;">09-03</span>
-        </a>
-    
-        
-        <a href="/blog/2019/09/01/冰总头条面经/" class="list-group-item list-group-item-action">
-            <span class="archive-post-title">冰总头条面经</span>
-            <span style="float: right;">09-01</span>
-        </a>
-    
-</div>
-
+                            <hr>
+                        </div>
+                        <br>
+                        <div>
+                            
+                            <p>
+                                <i class="iconfont icon-tag"></i>
+                                
+                            </p>
+                            
+                                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+                            
                         </div>
                     </div>
                 </div>
             </div>
+        <div class="d-none d-lg-block col-lg-2 toc-container">
+            
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i> Toc:</p> 
+    <div id="tocbot"></div>
+  </div>
+
         </div>
+    </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container comments mx-auto" id="comments">
+        
+    </div>
+</div>
+
     
 </main>
 
@@ -195,6 +187,11 @@
   <script src="/blog/lib/nprogress/nprogress.min.js?v=0.2.0"></script>
   <script src="/blog/js/main.js"></script>
   
+    
+      <script src="/blog/lib/tocbot/tocbot.min.js?v=4.7.0"></script>
+    
+    <script src="/blog/js/post.js"></script>
+  
   
     <script src="/blog/lib/prettify/prettify.min.js?v=0.1.0"></script>
     <script>
@@ -210,7 +207,7 @@
         var typed = new Typed('#subtitle', {
           strings: [
             '  ',
-            "Archives&nbsp;",
+            "React 性能优化&nbsp;",
         ],
         cursorChar: "_",
         typeSpeed: 70,

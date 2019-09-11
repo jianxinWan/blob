@@ -4,6 +4,32 @@
   
     
     <entry>
+      <title>面试点大纲--js基础</title>
+      <link href="undefined2019/09/09/%E9%9D%A2%E8%AF%95%E7%82%B9%E5%A4%A7%E7%BA%B2-js%E5%9F%BA%E7%A1%80/"/>
+      <url>2019/09/09/%E9%9D%A2%E8%AF%95%E7%82%B9%E5%A4%A7%E7%BA%B2-js%E5%9F%BA%E7%A1%80/</url>
+      
+        <content type="html"><![CDATA[<h1 id="面试点大纲–js基础"><a href="#面试点大纲–js基础" class="headerlink" title="面试点大纲–js基础"></a>面试点大纲–js基础</h1><h2 id="原型到原型链"><a href="#原型到原型链" class="headerlink" title="原型到原型链"></a>原型到原型链</h2><blockquote><ul><li>实例的隐式原型<code>__proto__</code>永远指向函数的显示原型<code>prototype</code></li><li>只有函数才有<code>prototype</code>属性，每一个对象都拥有<code>__proto__</code>属性</li><li>原型链依赖<code>__proto__</code>这个指针，每一级的原型对象都依靠这个指向上一级的原型对象</li><li>原型链的尽头都是<code>null</code></li><li>原生对象充当两面派，既是构造函数函数，也是对象</li><li>实例上如果不存在某个属性，其会通过原型链去寻找，<code>in</code>操作符会通过原型链去寻找，判断对象是是否存在某个属性<code>hasOwnProperty</code>,  <code>person.constructor === Person</code></li><li><strong>proto</strong>(非标准的方法访问原型),实际上，它是来自于 Object.prototype ，与其说是一个属性，不如说是一个 <code>getter/setter</code>，当使用 obj.<strong>proto</strong> 时，可以理解成返回了 <code>Object.getPrototypeOf(obj)</code>。</li></ul></blockquote><h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><ul><li>JavaScript 采用词法作用域(lexical scoping)，也就是静态作用域。函数的作用域在函数定义的时候就决定了</li><li>JavaScript 函数的执行用到了作用域链，这个作用域链是在函数定义的时候创建的。主要是其函数存在一个scope属性，不管在何时执行，都能够访问到scope中的变量</li><li>js — 执行上下文栈<pre><code class="js">ECStack = [checkscopeContext,globalContext];</code></pre></li><li>变量提升  函数 &gt; 变量 （<code>var a = &#39;2&#39; ===&gt; var a; a = 2</code>）</li><li>作用域链</li><li>[[scope]] 属性</li><li>this 判定</li><li>闭包—能够记住并访问其所在作用域中的变量</li></ul><h2 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h2><ul><li>ECMAScript中所有函数的参数都是按值传递的</li></ul><h2 id="call-apply"><a href="#call-apply" class="headerlink" title="call/apply"></a>call/apply</h2><ul><li>将函数设为对象的属性</li><li>执行该函数</li><li>删除该函数</li></ul><pre><code class="js">Function.prototype.call2 = function(ctx){  let context = ctx || window  context.fn = this  const args = Array.prototype.slice.call(arguments, 1);  const res = eval(`${context.fn(...args)}`)  delete context.fn  return res}</code></pre><p>接受一个数组，其他情况与call类似</p><h2 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h2><blockquote><ul><li>返回一个函数</li><li>可以传入参数</li></ul></blockquote><p>bind() 方法接受一个参数，当这个参数被调用时，bind()的第一个参数被当作它运行时的this，之后的一系列参数将会在实参前传入作为他的参数</p><p>注意点</p><ul><li>当bind返回的函数当作构造函数时,之前的this会失效，同时调用时的参数会当作参数传给模拟函数</li></ul><pre><code class="js">Function.prototype.bind2 = function (context) {  const self = this  const args = Array.prototype.slice.call(arguments, 1)  const Func = function () {}  const bindFun = function () {    const bindArgs = Array.prototype.slice.call(arguments)    return self.apply(this instanceof Func ? this : context, [...args, ...bindArgs])  }  Func.prototype = this.prototype  // 等价于Object.create()  bindFun.prototype = new Func()  return bindFun}</code></pre><h2 id="new的模拟实现"><a href="#new的模拟实现" class="headerlink" title="new的模拟实现"></a>new的模拟实现</h2><blockquote><ul><li>通过new操作符生成一个对象，这个对象继承构造函数中的属性和原型链上的属性</li><li>new是js中的一个关键字，所以通过一个函数来模拟实现，第一个参数为构造函数</li></ul></blockquote><pre><code class="js">function objectFactory () {  const obj = new Object()  Constructor = [].shift.call(arguments)  obj.__proto__ = Constructor.prototype  const resObj = Constructor.apply(obj, arguments); //判断构造函数是否有返回值并且是一个对象，返回这个对象，否则返回新创建的那个对象  return typeof ret === &#39;object&#39; ? resObj : obj;}</code></pre>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>React 性能优化</title>
+      <link href="undefined2019/09/05/React-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+      <url>2019/09/05/React-%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>高阶组件</title>
       <link href="undefined2019/09/04/%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6/"/>
       <url>2019/09/04/%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6/</url>
